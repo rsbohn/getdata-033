@@ -47,3 +47,13 @@ labels <- read.table("UCI HAR Dataset/activity_labels.txt")[[2]]
 DF$activity <- labels[DF$activity]
 
 write.table(DF, "DF_tidy.txt", row.names = FALSE)
+
+
+# How would I get the requested data for one subject?
+subject.1 <- DF[DF$subject == 1,]
+observations <- names(DF)[-1:-2]
+means.1 <- sapply(observations,
+                  function(v) tapply(subject.1[,v], subject.1$activity, mean))
+
+write.table(means.1, "subject1-means.txt")
+
